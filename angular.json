@@ -124,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "hockey-api-test"
+    }
+  },
+  "defaultProject": "hockey-api-test",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
