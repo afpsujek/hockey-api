@@ -5,6 +5,13 @@ export enum TeamsActionTypes {
   LoadTeams = '[Teams] Load Teams',
 }
 
+export class TeamAction implements Action {
+  type: string;
+  payload: {
+    teamData: TeamData
+  };
+}
+
 export class LoadTeams implements Action {
   readonly type = TeamsActionTypes.LoadTeams;
 

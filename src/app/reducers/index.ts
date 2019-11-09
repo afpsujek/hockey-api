@@ -7,7 +7,7 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import { TeamData } from '../models/teamData';
-import { TeamsActions, TeamsActionTypes } from '../actions/teams.actions';
+import { TeamsActions, TeamsActionTypes, TeamAction } from '../actions/teams.actions';
 
 
 export interface TeamState {
@@ -22,7 +22,7 @@ export interface HockeyState {
   teams: TeamState;
 }
 
-export function teamReducer(state: TeamState = initialTeamState, action: TeamsActions): TeamState {
+export function teamReducer(state: TeamState = initialTeamState, action: TeamAction): TeamState {
   switch(action.type) {
     case TeamsActionTypes.LoadTeams:
       return {
@@ -36,5 +36,7 @@ export function teamReducer(state: TeamState = initialTeamState, action: TeamsAc
 export const reducers: ActionReducerMap<HockeyState> = {
   teams: teamReducer
 };
+
+export const selectTeams = (state: HockeyState) => state.teams.teamData;
 
 export const metaReducers: MetaReducer<any>[] = !environment.production ? [] : [];
