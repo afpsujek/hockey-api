@@ -7,15 +7,17 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
 import { TeamData } from '../models/teamData';
-import { TeamsActions, TeamsActionTypes, TeamAction } from '../actions/teams.actions';
+import { TeamsActionTypes, TeamAction } from '../actions/teams.actions';
 
 
 export interface TeamState {
-  teamData: TeamData | null;
+  teamData: any | null;
+  mappedData: TeamData[] | null;
 }
 
 const initialTeamState: TeamState = {
-  teamData: null
+  teamData: null,
+  mappedData: null
 };
 
 export interface HockeyState {
@@ -26,7 +28,13 @@ export function teamReducer(state: TeamState = initialTeamState, action: TeamAct
   switch(action.type) {
     case TeamsActionTypes.LoadTeams:
       return {
-        teamData: action.payload.teamData
+        teamData: action.payload.teamData,
+        mappedData: null
+      }
+    case TeamsActionTypes.MapTeams:
+      return {
+        teamData: null,
+        mappedData: action.payload.mappedData
       }
       default:
         return state;
@@ -38,5 +46,7 @@ export const reducers: ActionReducerMap<HockeyState> = {
 };
 
 export const selectTeams = (state: HockeyState) => state.teams.teamData;
+
+export const selectMappedTeams = (state: HockeyState) => state.teams.mappedData;
 
 export const metaReducers: MetaReducer<any>[] = !environment.production ? [] : [];

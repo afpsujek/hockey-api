@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { HockeyState } from '../reducers';
 import { Store } from '@ngrx/store';
 import { TeamService } from '../shared/services/team.service';
-import { LoadTeams, TeamsActionTypes } from '../actions/teams.actions';
+import { LoadTeams, TeamsActionTypes, MappedTeams } from '../actions/teams.actions';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
@@ -17,7 +17,7 @@ export class TeamEffects {
       mergeMap((action) => this.teamService.getAllTeams()
       .pipe(
         map(teams => {
-          return (new LoadTeams({teamData: teams}))
+          return (new MappedTeams({mappedData: this.teamService.getMappedTeams(teams)}))
         }),
         catchError((errorMessage) => of(console.log(errorMessage)))
       ))

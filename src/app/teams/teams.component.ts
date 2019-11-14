@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TeamService } from '../shared/services/team.service';
-import { TeamState, selectTeams, HockeyState } from '../reducers';
+import { TeamState, selectTeams, HockeyState, selectMappedTeams } from '../reducers';
 import { Store, select } from '@ngrx/store';
 import { LoadTeams } from '../actions/teams.actions';
 import { TeamData } from '../models/teamData';
@@ -13,8 +13,8 @@ import { Observable } from 'rxjs';
 })
 export class TeamsComponent implements OnInit {
 
-  private teamsData: TeamData = null;
-  team$: Observable<TeamData>;
+  private teamsData: TeamData[] = null;
+  team$: Observable<TeamData[]>;
 
   constructor(
     private teamService: TeamService,
@@ -22,18 +22,16 @@ export class TeamsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.team$ = this.store.pipe(select(selectTeams));
-    this.team$.subscribe(res => {
-      console.log(res)
-    })
+    this.store.dispatch(new LoadTeams({teamData: this.teamsData}));
   }
 
+  //this currently causes an infinite loop, split out get teams and get mapped teams to two different actions
   public getTeams() {
-    this.teamService.getMappedTeams().subscribe(result => {
-      console.log(result);
-    });
-
-    //this.store.dispatch(new LoadTeams({teamData: this.teamsData}));
+    this.team$ = this.store.pipe(select(selectMappedTeams));
+    this.team$.subscribe(res => {
+      this.teamsData = res
+      console.log(res)
+    })
   }
 
 }
