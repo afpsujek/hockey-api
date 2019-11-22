@@ -1,14 +1,15 @@
-<h1>Click the button below to retrieve the nhl teams</h1>
-<button (click)="getTeams()">Retrieve Teams</button>
-<table *ngIf="team$ | async as teams">
-    <tbody>
-        <td *ngFor="let team of teams">
-            <tr>
-                {{team.id}}
-            </tr>
-            <tr>
-                {{team.name}}
-            </tr>
-        </td>
-    </tbody>
-</table>
+<div ngClass="teams-header">
+    <h1>Click the button below to retrieve the nhl teams</h1>
+    <button (click)="getTeams()">Retrieve Teams</button>
+</div>
+<div *ngIf="team$ | async as teams" ngClass="teams-container" fxLayout="row wrap" fxLayoutAlign="center">
+    <mat-card *ngFor="let team of teams" ngClass="teams-card">
+        <mat-card-header>
+            <mat-card-title>{{team.name}}</mat-card-title>
+            <mat-card-subtitle>{{team.id}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            Card content will go here
+        </mat-card-content>
+    </mat-card>
+</div>

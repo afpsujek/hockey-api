@@ -11,16 +11,20 @@ import { EffectsModule } from '@ngrx/effects';
 import { TeamEffects } from './effects/team.effects';
 import { TeamsComponent } from './teams/teams.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TeamsComponent
+    TeamsComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    SharedModule,
     StoreModule.forRoot(reducers, {
       metaReducers, 
       runtimeChecks: {
