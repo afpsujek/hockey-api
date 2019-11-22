@@ -5,6 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { LoadTeams } from '../actions/teams.actions';
 import { TeamData } from '../models/teamData';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-teams',
@@ -18,14 +19,14 @@ export class TeamsComponent implements OnInit {
 
   constructor(
     private teamService: TeamService,
-    private store: Store<HockeyState>
+    private store: Store<HockeyState>,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.store.dispatch(new LoadTeams({teamData: this.teamsData}));
   }
 
-  //this currently causes an infinite loop, split out get teams and get mapped teams to two different actions
   public getTeams() {
     this.team$ = this.store.pipe(select(selectMappedTeams));
     this.team$.subscribe(res => {
@@ -34,4 +35,7 @@ export class TeamsComponent implements OnInit {
     })
   }
 
+  public navToTeamDetails(id) {
+    this.router.navigate(['/teams/' + id])
+  }
 }

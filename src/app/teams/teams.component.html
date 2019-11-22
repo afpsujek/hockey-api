@@ -1,9 +1,9 @@
 <div ngClass="teams-header">
     <h1>Click the button below to retrieve the nhl teams</h1>
-    <button (click)="getTeams()">Retrieve Teams</button>
+    <button mat-raised-button color="primary" (click)="getTeams()">Retrieve Teams</button>
 </div>
 <div *ngIf="team$ | async as teams" ngClass="teams-container" fxLayout="row wrap" fxLayoutAlign="center">
-    <mat-card *ngFor="let team of teams" ngClass="teams-card">
+    <mat-card *ngFor="let team of teams" ngClass="teams-card" (click)="navToTeamDetails(team.id)">
         <mat-card-header>
             <mat-card-title>{{team.name}}</mat-card-title>
             <mat-card-subtitle>{{team.id}}</mat-card-subtitle>

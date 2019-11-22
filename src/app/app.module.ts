@@ -13,12 +13,14 @@ import { TeamsComponent } from './teams/teams.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from './shared/shared.module';
+import { TeamComponent } from './team/team.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TeamsComponent,
-    HomeComponent
+    HomeComponent,
+    TeamComponent
   ],
   imports: [
     BrowserModule,
