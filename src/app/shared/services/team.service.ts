@@ -25,7 +25,7 @@ export class TeamService {
         teamData.push(newTeam)
       })
       
-      return teamData
+      return teamData;
   }
 
   public getAllTeams(): Observable<any> {
@@ -33,6 +33,26 @@ export class TeamService {
     const teamsConcat = 'teams';
     const nhlApiTeamsEndpoint = nhlApiEndpoint + teamsConcat;
     return this.http.get(nhlApiTeamsEndpoint)
+      .pipe(
+        catchError(error => {
+          return throwError('Error getting all the nhl teams')
+        })
+      );
+  }
+
+  public getTeam(id, query?): Observable<any> {
+    const nhlApiEndpoint = environment.nhlApiEndpoint;
+    let search;
+
+    if (query) {
+      const teamsConcat = 'teams/' + id + '?' + query;
+      search = nhlApiEndpoint + teamsConcat;
+    } else {
+      const teamsConcat = 'teams/' + id;
+      search = nhlApiEndpoint + teamsConcat;
+    }
+
+    return this.http.get(search)
       .pipe(
         catchError(error => {
           return throwError('Error getting all the nhl teams')
