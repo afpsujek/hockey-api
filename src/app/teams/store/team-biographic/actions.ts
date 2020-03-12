@@ -1,9 +1,11 @@
 import { Action } from '@ngrx/store';
-import { TeamData } from '../models/teamData';
+import { TeamData } from '../../models/teamData';
 
 export enum TeamsActionTypes {
   LoadTeams = '[Teams] Load Teams',
-  MapTeams = '[Teams] Mapped Teams'
+  MapTeams = '[Teams] Mapped Teams',
+  LoadIndividualTeam = '[Teams] Load Individual Team',
+  MapIndividualTeam = '[Teams] Map Individual Teams'
 }
 
 export class TeamAction implements Action {
@@ -16,10 +18,6 @@ export class TeamAction implements Action {
 
 export class LoadTeams implements Action {
   readonly type = TeamsActionTypes.LoadTeams;
-
-  constructor(readonly payload: {teamData: any}) {
-    
-  }
 }
 
 export class MappedTeams implements Action {

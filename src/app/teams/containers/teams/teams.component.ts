@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { TeamService } from '../shared/services/team.service';
-import { TeamState, selectTeams, HockeyState, selectMappedTeams } from '../reducers';
+import { TeamService } from '../../../shared/services/team.service';
 import { Store, select } from '@ngrx/store';
-import { LoadTeams } from '../actions/teams.actions';
-import { TeamData } from '../models/teamData';
+
+import { TeamData } from '../../models/teamData';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { HockeyState } from '../../store/team-biographic/state';
+import { LoadTeams } from '../../store/team-biographic/actions';
+import { selectMappedTeams } from '../../store/team-biographic/selectors';
 
 @Component({
   selector: 'app-teams',
@@ -24,14 +26,13 @@ export class TeamsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.store.dispatch(new LoadTeams({teamData: this.teamsData}));
+    this.store.dispatch(new LoadTeams());
   }
 
   public getTeams() {
     this.team$ = this.store.pipe(select(selectMappedTeams));
     this.team$.subscribe(res => {
       this.teamsData = res
-      console.log(res)
     })
   }
 

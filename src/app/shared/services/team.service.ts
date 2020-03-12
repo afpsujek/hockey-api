@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, mergeMap, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { TeamData } from 'src/app/models/teamData';
+import { TeamData } from 'src/app/teams/models/teamData';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +15,9 @@ export class TeamService {
   ) { }
 
   public getMappedTeams(teams): TeamData[] {
-    const teamData: TeamData[] = [];
+    const teamData: TeamData[] = teams.teams;
 
-      let teamsInfo = teams.teams;
-      teamsInfo.forEach(team => {
-        let newTeam = new TeamData()
-        newTeam.id = team.id;
-        newTeam.name = team.name;
-        teamData.push(newTeam)
-      })
-      
-      return teamData;
+    return teamData;
   }
 
   public getAllTeams(): Observable<any> {

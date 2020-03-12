@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { HockeyState } from '../reducers';
 import { Store } from '@ngrx/store';
-import { TeamService } from '../shared/services/team.service';
-import { LoadTeams, TeamsActionTypes, MappedTeams } from '../actions/teams.actions';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { TeamService } from 'src/app/shared/services/team.service';
+import { TeamsActionTypes, LoadTeams, MappedTeams } from './actions';
+import { HockeyState } from './state';
 
 @Injectable()
 export class TeamEffects {
 
   @Effect()
-  loadTeam$ = this.actions$
+  loadTeams$ = this.actions$
     .pipe(
       ofType<LoadTeams>(TeamsActionTypes.LoadTeams),
-      mergeMap((action) => this.teamService.getAllTeams()
+      mergeMap(() => this.teamService.getAllTeams()
       .pipe(
         map(teams => {
           return (new MappedTeams({mappedData: this.teamService.getMappedTeams(teams)}))
@@ -22,6 +22,13 @@ export class TeamEffects {
         catchError((errorMessage) => of(console.log(errorMessage)))
       ))
     )
+
+    @Effect()
+    loadTeam$ = this.actions$
+        .pipe(
+          
+        )
+
 
   constructor(
     private actions$: Actions, 
